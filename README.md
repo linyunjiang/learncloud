@@ -1,10 +1,7 @@
 # Learncloud
+用于封装learncloud短信验证rest api, https://leancloud.cn/docs/rest_sms_api.html
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/learncloud`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
+## 安装
 
 Add this line to your application's Gemfile:
 
@@ -20,22 +17,34 @@ Or install it yourself as:
 
     $ gem install learncloud
 
-## Usage
+## 初始化
+```ruby
+    Learncloud.configure do |config|
+      config.app_id = ''
+      config.app_key = ''
+      config.log_file = ''
+      config.log_level = :warn
+    end
+    @service = Learncloud::Service.new
+```
 
-TODO: Write usage instructions here
+## 接口
 
-## Development
+发送验证码
+参数: phone 目标手机号码 phone='13555555555' 目前只做国内用户
+     template 短信模板名称
+     ttl 验证码有效时间。单位分钟（默认为 10 分钟）
+```ruby
+@service.sms_code(phone, template, ttl)
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake false` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+校验验证码
+参数: phone
+     sms_code 验证码
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+@service.verify_sms_code(sms_code, phone)
+```
 
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/learncloud. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
-
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+###
 

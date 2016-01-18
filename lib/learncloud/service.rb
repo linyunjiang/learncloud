@@ -20,7 +20,7 @@ module Learncloud
 
     # 发送验证码
     # params:
-    # phone 目标手机号码 phone='13560474456' 目前没做国际用户
+    # phone 目标手机号码 phone='13555555555' 目前只做国内用户
     # template 模板名称
     # ttl 验证码有效时间。单位分钟（默认为 10 分钟）
     def sms_code(phone, template, ttl = 10)
@@ -36,7 +36,7 @@ module Learncloud
 
     # 校验验证码
     # params:
-    # phone 目标手机号码 phone='13560474456' 目前没做国际用户
+    # phone 目标手机号码 phone='13555555555' 目前只做国内用户
     # sms_code: 验证码
     def verify_sms_code(sms_code, phone)
       $logger.warn "#{Time.now} verify sms_code, phone is #{phone} and sms_code is #{sms_code}"
