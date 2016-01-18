@@ -19,13 +19,13 @@ Or install it yourself as:
 
 ## 初始化
 ```ruby
-    Learncloud.configure do |config|
-      config.app_id = ''
-      config.app_key = ''
-      config.log_file = ''
-      config.log_level = :warn
-    end
-    @service = Learncloud::Service.new
+Learncloud.configure do |config|
+  config.app_id = ''
+  config.app_key = ''
+  config.log_file = ''
+  config.log_level = :warn
+end
+@service = Learncloud::Service.new
 ```
 
 ## 接口
