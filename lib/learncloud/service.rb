@@ -44,11 +44,11 @@ module Learncloud
           when '200'
             {}
           when '127'
-            {'code': 127, 'error': '无效的手机号码.'}
+            {'code' => 127, 'error' => '无效的手机号码.'}
           when '401'
-            {'code': 401, 'error': 'Unauthorized.'}
+            {'code' => 401, 'error' => 'Unauthorized.'}
           when '603'
-            {'code': 603, 'error': '无效的短信验证码'}
+            {'code' => 603, 'error' => '无效的短信验证码'}
           else
             {} # 待处理
         end
