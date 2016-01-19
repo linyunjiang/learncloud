@@ -16,12 +16,12 @@ describe Learncloud::Service do
   end
 
   it 'should send sms_code' do
-    res_hash = @service.sms_code('15920456422', '直播新三板')
+    res_hash = @service.sms_code('159********', '****')
     expect(res_hash).to eq({})
   end
 
   it 'should verify sms_code success' do
-    res_hash = @service.verify_sms_code('123456', '15920456422')
+    res_hash = @service.verify_sms_code('175184', '159********')
     expect(res_hash).to eq({})
   end
 end
