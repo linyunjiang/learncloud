@@ -16,7 +16,7 @@ module Learncloud
 
   class Configuration  #:nodoc:
     include ActiveSupport::Configurable
-    config_accessor :app_id, :app_key, :log_file, :log_level
+    config_accessor :app_id, :app_key, :log_file, :log_level, :verify_test_code
   end
 
   # this is ugly. why can't we pass the default value to config_accessor...?
@@ -25,5 +25,6 @@ module Learncloud
     config.app_key = ''
     config.log_file = ''
     config.log_level = :warn
+    config.verify_test_code = '200'
   end
 end

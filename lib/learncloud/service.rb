@@ -1,6 +1,5 @@
 require 'json'
 require 'active_support/core_ext/hash/keys'
-require 'rest-client'
 require 'logging'
 
 module Learncloud
@@ -14,7 +13,7 @@ module Learncloud
       @app_id = Learncloud.config.app_id
       @app_key = Learncloud.config.app_key
       @host = 'https://api.leancloud.cn/1.1'
-
+      @verify_test_code = Learncloud.config.verify_test_code if ENV['RAILS_ENV'] == 'test'
       $logger.warn "#{Time.now} a new Learncloud service is created, app id is #{@app_id}, app key is #{@app_key}"
     end
 
@@ -40,13 +39,28 @@ module Learncloud
     # sms_code: 验证码
     def verify_sms_code(sms_code, phone)
       $logger.warn "#{Time.now} verify sms_code, phone is #{phone} and sms_code is #{sms_code}"
-      url = URI.parse("#{@host}/verifySmsCode/#{sms_code}?mobilePhoneNumber=#{phone}")
-      http = Net::HTTP.new(url.host, url.port)
-      http.use_ssl = true
-      resp = http.post(url.path, {}.to_json,
-                       {'Content-Type' => 'application/json', 'X-LC-Id' => @app_id, 'X-LC-Key' => @app_key})
-      $logger.warn "#{Time.now} verify sms_code result is #{resp.body}"
-      res = JSON.parse resp.body
+      if ENV['RAILS_ENV'] == 'test'
+        case @verify_test_code
+          when '200'
+            {}
+          when '127'
+            {'code': 127, 'error': '无效的手机号码.'}
+          when '401'
+            {'code': 401, 'error': 'Unauthorized.'}
+          when '603'
+            {'code': 603, 'error': '无效的短信验证码'}
+          else
+            {} # 待处理
+        end
+      else
+        url = URI.parse("#{@host}/verifySmsCode/#{sms_code}?mobilePhoneNumber=#{phone}")
+        http = Net::HTTP.new(url.host, url.port)
+        http.use_ssl = true
+        resp = http.post(url.path, {}.to_json,
+                         {'Content-Type' => 'application/json', 'X-LC-Id' => @app_id, 'X-LC-Key' => @app_key})
+        $logger.warn "#{Time.now} verify sms_code result is #{resp.body}"
+        res = JSON.parse resp.body
+      end
     end
   end
 end
