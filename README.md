@@ -40,6 +40,12 @@ $learncloud.sms_code(phone, template, ttl)
 ```
 成功返回值 {}
 
+自定义模板传参接口
+```ruby
+$learncloud.sms_code_v2({'mobilePhoneNumber': '', 'ttl': 10, 'template': '' ...})
+```
+成功返回值 {}
+
 校验验证码
 参数: phone;
      sms_code 验证码

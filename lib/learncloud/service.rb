@@ -33,6 +33,19 @@ module Learncloud
       res = JSON.parse resp.body
     end
 
+    # 发送验证码 v2
+    # 用于自定义模板自己传参
+    def sms_code_v2(params = {})
+      $logger.warn "#{Time.now} send sms_code_v2, params is #{params}"
+      url = URI.parse("#{@host}/requestSmsCode")
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
+      resp = http.post(url.path, params.to_json,
+                       {'Content-Type' => 'application/json', 'X-LC-Id' => @app_id, 'X-LC-Key' => @app_key })
+      $logger.warn "#{Time.now} send sms_code result is #{resp.body}"
+      res = JSON.parse resp.body
+    end
+
     # 校验验证码
     # params:
     # phone 目标手机号码 phone='13555555555' 目前只做国内用户
